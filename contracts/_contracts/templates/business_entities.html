@@ -1,85 +1,104 @@
-{%extends 'base.html'%}
+{%extends 'home.html'%}
 
 {%block title%} Contracts App {%endblock%}
 
 {%block content%}
 <div>
-  <form class="row g-3" method="POST">
-    {%csrf_token%}
-    <div class="col-md-10">
-        <label for="inputCompany" class="form-label">Company</label>
-        <input type="text" class="form-control" id="inputCompany" name="company_name">
-    </div>
-    <div class="col-md-2">
-      <label for="inputCompanyType" class="form-label">Company Type</label>
-      <select type="text" class="form-select" id="inputCompanyType" name="company_type">
-        <option selected>Choose...</option>
-        <option>External</option>
-        <option>Internal</option>
-      </select>
-    </div>
-    <div class="col-12">
-      <label for="inputAddress" class="form-label">Address</label>
-      <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" name="address">
-    </div>
-    <div class="col-12">
-      <label for="inputAddress2" class="form-label">Address 2</label>
-      <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" name="address2">
-    </div>
-    <div class="col-md-6">
-      <label for="inputCity" class="form-label">City</label>
-      <input type="text" class="form-control" id="inputCity" name="city">
-    </div>
-    <div class="col-md-4">
-      <label for="inputRegion" class="form-label">Region</label>
-      <input type="text" class="form-control" id="inputRegion" name="region">
-    </div>
-    <div class="col-md-2">
-      <label for="inputPostcode" class="form-label">Postcode</label>
-      <input type="text" class="form-control" id="inputPostcode" name="postcode">
-    </div>
-    <div class="col-12">
-      <button type="submit" class="btn btn-outline-secondary">Submit</button>
-    </div>
-  </form>
-  <hr width=”75%”>
-  {%if messages%}
-    {%for message in messages%}
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{message}}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <h1>Business Entities</h1>
+  <div class="container">
+    <form class="row g-3" method="POST">
+      {%csrf_token%}
+      <div class="col-md-10">
+          <label for="inputCompany" class="form-label">Company</label>
+          <input type="text" class="form-control" id="inputCompany" name="company_name">
       </div>
-    {%endfor%}
-  {%endif%}
-  {%if all_entities%}
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">Company Name</th>
-          <th scope="col">Address</th>
-          <th scope="col">Address2</th>
-          <th scope="col">City</th>
-          <th scope="col">Region</th>
-          <th scope="col">Postcode</th>
-          <th scope="col">Company Type</th>
-        </tr>
-      </thead>
-      <tbody>
-      {%for entities in all_entities%}
-        <tr>
-          <td>{{entities.company_name}}</td>
-          <td>{{entities.address}}</td>
-          <td>{{entities.address2}}</td>
-          <td>{{entities.city}}</td>
-          <td>{{entities.region}}</td>
-          <td>{{entities.postcode}}</td>
-          <td>{{entities.company_type}}</td>
-        </tr>
-      {%endfor%}
-      </tbody>
-    <table>
+      <div class="col-md-2">
+        <label for="inputCompanyType" class="form-label">Company Type</label>
+        <select type="text" class="form-select" id="inputCompanyType" name="company_type">
+          <option selected>Choose...</option>
+          <option>External</option>
+          <option>Internal</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <label for="inputAddress" class="form-label">Address</label>
+        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" name="address">
+      </div>
+      <div class="col-12">
+        <label for="inputAddress2" class="form-label">Address 2</label>
+        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" name="address2">
+      </div>
+      <div class="col-md-6">
+        <label for="inputCity" class="form-label">City</label>
+        <input type="text" class="form-control" id="inputCity" name="city">
+      </div>
+      <div class="col-md-4">
+        <label for="inputRegion" class="form-label">Region</label>
+        <input type="text" class="form-control" id="inputRegion" name="region">
+      </div>
+      <div class="col-md-2">
+        <label for="inputPostcode" class="form-label">Postcode</label>
+        <input type="text" class="form-control" id="inputPostcode" name="postcode">
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-outline-secondary">Add</button>
+      </div>
+    </form>
+  <hr width=”75%”>
   </div>
-  {%endif%}
+  <div class="container">
+    <form class="d-flex" action="{%url 'business_entities'%}" method="get">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_query">
+      <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </form>
+    <br/>
+    {%if messages%}
+      {%for message in messages%}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {%endfor%}
+    {%endif%}
+    {%if all_entities%}
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Company Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Address2</th>
+            <th scope="col">City</th>
+            <th scope="col">Region</th>
+            <th scope="col">Postcode</th>
+            <th scope="col">Company Type</th>
+          </tr>
+        </thead>
+        <tbody>
+        {%for entities in all_entities%}
+          <tr>
+
+            <td>
+              <a href = "{%url 'business_entities_delete' entities.id%}">
+                <button class="btn btn-outline-danger">Delete</button>
+              </a>
+            </td>
+            <td>
+              <a href = "{%url 'business_entities_edit' entities.id%}">{{entities.company_name}}
+            </td>
+            <td>{{entities.address}}</td>
+            <td>{{entities.address2}}</td>
+            <td>{{entities.city}}</td>
+            <td>{{entities.region}}</td>
+            <td>{{entities.postcode}}</td>
+            <td>{{entities.company_type}}</td>
+          </tr>
+        {%endfor%}
+        </tbody>
+      <table>
+    </div>
+    {%endif%}
+  </div>
 </div>
 {%endblock%}
