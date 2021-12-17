@@ -8,12 +8,15 @@ class BusinessEntity(models.Model):
     company_name = models.CharField(max_length=200)
     company_type = models.CharField(max_length=10)
     address = models.CharField(max_length=2000)
-    address2 = models.CharField(max_length=2000)
+    address2 = models.CharField(max_length=2000, null=True, blank=True)
     city = models.CharField(max_length=200)
-    region = models.CharField(max_length=200)
-    postcode = models.CharField(max_length=200)
+    region = models.CharField(max_length=200, null=True, blank=True)
+    postcode = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.company_name
+    
+    class Meta:
+        ordering = ['-created_at']

@@ -3,6 +3,7 @@ from .models import BusinessEntity
 from .forms import BusinessEntityForm
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 def home(request):
     return render(request, 'home.html',{})
@@ -17,20 +18,19 @@ def business_entities(request):
             form.save()
             all_entities = BusinessEntity.objects.all
             messages.success(request, 'Company has been added!')
-            return render(request, 'business_entities.html', {'all_entities': all_entities})
+            context = {'all_entities': all_entities}
+            return render(request, 'business_entities.html', context)
     else:
         search_query = ''
         if request.GET.get('search_query'):
             search_query = request.GET.get('search_query')
         
-        all_entities = BusinessEntity.objects.filter(company_name__icontains=search_query)
-        return render(request, 'business_entities.html', {'all_entities': all_entities})
-
-def business_entities_delete(request, company_name_id):
-    business_entity_delete = BusinessEntity.objects.get(pk=company_name_id)
-    business_entity_delete.delete()
-    messages.success(request, 'Company has been deleted!')
-    return redirect('business_entities')
+        all_entities = BusinessEntity.objects.filter(
+            Q(company_name__icontains=search_query) | Q(company_type__icontains=search_query) | Q(address__icontains=search_query) |
+            Q(address2__icontains=search_query) | Q(city__icontains=search_query) | Q(region__icontains=search_query) |
+            Q(postcode__icontains=search_query))
+        context = {'all_entities': all_entities, 'search_query': search_query}
+        return render(request, 'business_entities.html', context)
 
 def business_entities_edit(request, company_name_id):
     if request.method == 'POST':
@@ -42,4 +42,11 @@ def business_entities_edit(request, company_name_id):
             return redirect('business_entities')
     else:
         all_entities = BusinessEntity.objects.get(pk=company_name_id)
-        return render(request, 'business_entities_edit.html',{'all_entities': all_entities})
+        context = {'all_entities': all_entities}
+        return render(request, 'business_entities_edit.html', context)
+    
+def business_entities_delete(request, company_name_id):
+    all_deletes = BusinessEntity.objects.get(pk=company_name_id)
+    all_deletes.delete()
+    messages.success(request, 'Company has been deleted!')
+    return redirect('business_entities')

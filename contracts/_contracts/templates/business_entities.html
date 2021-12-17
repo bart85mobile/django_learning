@@ -48,7 +48,7 @@
   </div>
   <div class="container">
     <form class="d-flex" action="{%url 'business_entities'%}" method="get">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_query">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="{{search_query}}" name="search_query">
       <button class="btn btn-outline-secondary" type="submit">Search</button>
     </form>
     <br/>
@@ -78,14 +78,13 @@
         <tbody>
         {%for entities in all_entities%}
           <tr>
-
             <td>
               <a href = "{%url 'business_entities_delete' entities.id%}">
-                <button class="btn btn-outline-danger">Delete</button>
+                <button type="button" class="btn btn-outline-danger">Delete</button>
               </a>
             </td>
             <td>
-              <a href = "{%url 'business_entities_edit' entities.id%}">{{entities.company_name}}
+              <a href = "{%url 'business_entities_edit' entities.id%}">{{entities.company_name}}</a>
             </td>
             <td>{{entities.address}}</td>
             <td>{{entities.address2}}</td>
