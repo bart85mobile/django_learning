@@ -8,8 +8,8 @@
   <form class="row g-3" method="POST">
     {%csrf_token%}
     <div class="col-md-10">
-        <label for="inputCompany" class="form-label">Company</label>
-        <input type="text" class="form-control" id="inputCompany" name="company_name">
+      <label for="inputCompany" class="form-label">Company</label>
+      <input type="text" class="form-control" id="inputCompany" name="company_name">
     </div>
     <div class="col-md-2">
       <label for="inputCompanyType" class="form-label">Company Type</label>
@@ -40,7 +40,10 @@
       <input type="text" class="form-control" id="inputPostcode" name="postcode">
     </div>
     <div class="col-12">
-      <button type="submit" class="btn btn-outline-secondary">Update</button>
+      <a href="/business_entities">
+        <div class="btn btn-outline-secondary">Cancel</div>
+      </a>
+      <button type="submit" class="btn btn-outline-success">Update</button>
     </div>
   </form>
 {%endblock%}

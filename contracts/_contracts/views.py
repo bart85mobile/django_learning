@@ -32,21 +32,23 @@ def business_entities(request):
         context = {'all_entities': all_entities, 'search_query': search_query}
         return render(request, 'business_entities.html', context)
 
-def business_entities_edit(request, company_name_id):
+def business_entities_upd(request, company_name_id):
+    all_entities = BusinessEntity.objects.get(pk=company_name_id)
     if request.method == 'POST':
-        all_entities = BusinessEntity.objects.get(pk=company_name_id)
         form = BusinessEntityForm(request.POST or None, instance = all_entities)
         if form.is_valid():
             form.save()
             messages.success(request, 'Company has been updated!')
             return redirect('business_entities')
     else:
-        all_entities = BusinessEntity.objects.get(pk=company_name_id)
         context = {'all_entities': all_entities}
-        return render(request, 'business_entities_edit.html', context)
-    
-def business_entities_delete(request, company_name_id):
-    all_deletes = BusinessEntity.objects.get(pk=company_name_id)
-    all_deletes.delete()
-    messages.success(request, 'Company has been deleted!')
-    return redirect('business_entities')
+        return render(request, 'business_entities_upd.html', context)
+
+def business_entities_del(request, company_name_id):
+    all_entities = BusinessEntity.objects.get(pk=company_name_id)
+    if request.method == 'POST':
+        all_entities.delete()
+        messages.success(request, 'Company has been deleted!')
+        return redirect('business_entities')
+    else:
+        return render(request, 'business_entities_del.html')
