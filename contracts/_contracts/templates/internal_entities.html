@@ -4,21 +4,14 @@
 
 {%block content%}
 <div>
-  <h1>Business Entities</h1>
+  <h1>Internal Entities</h1>
+  <br>
   <div>
     <form class="row g-3" method="POST">
       {%csrf_token%}
-      <div class="col-md-10">
+      <div class="col-md-12">
         <label for="inputCompany" class="form-label">Company</label>
         <input type="text" class="form-control" id="inputCompany" name="company_name">
-      </div>
-      <div class="col-md-2">
-        <label for="inputCompanyType" class="form-label">Company Type</label>
-        <select type="text" class="form-select" id="inputCompanyType" name="company_type">
-          <option selected>Choose...</option>
-          <option>External</option>
-          <option>Internal</option>
-        </select>
       </div>
       <div class="col-12">
         <label for="inputAddress" class="form-label">Address</label>
@@ -47,7 +40,7 @@
   <hr width=”75%”>
   </div>
   <div>
-    <form class="d-flex" action="{%url 'business_entities'%}" method="get">
+    <form class="d-flex" action="{%url 'internal_entities'%}" method="get">
       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="{{search_query}}" name="search_query">
       <button class="btn btn-outline-secondary" type="submit">Search</button>
     </form>
@@ -71,7 +64,6 @@
             <th scope="col">City</th>
             <th scope="col">Region</th>
             <th scope="col">Postcode</th>
-            <th scope="col">Company Type</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -79,16 +71,15 @@
         {%for entities in all_entities%}
           <tr>
             <td>
-              <a href = "{%url 'business_entities_upd' entities.id%}">{{entities.company_name}}</a>
+              <a href = "{%url 'internal_entities_upd' entities.id%}">{{entities.company_name}}</a>
             </td>
             <td>{{entities.address}}</td>
             <td>{{entities.address2}}</td>
             <td>{{entities.city}}</td>
             <td>{{entities.region}}</td>
             <td>{{entities.postcode}}</td>
-            <td>{{entities.company_type}}</td>
             <td>
-              <a href = "{%url 'business_entities_del' entities.id%}">
+              <a href = "{%url 'internal_entities_del' entities.id%}">
                 <button type="button" class="btn btn-outline-danger">Delete</button>
               </a>
             </td>

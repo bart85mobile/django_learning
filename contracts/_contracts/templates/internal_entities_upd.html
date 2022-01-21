@@ -7,17 +7,9 @@
   <h1>Edit Business Entity</h1>
   <form class="row g-3" method="POST">
     {%csrf_token%}
-    <div class="col-md-10">
+    <div class="col-md-12">
       <label for="inputCompany" class="form-label">Company</label>
       <input type="text" class="form-control" id="inputCompany" name="company_name">
-    </div>
-    <div class="col-md-2">
-      <label for="inputCompanyType" class="form-label">Company Type</label>
-      <select type="text" class="form-select" id="inputCompanyType" name="company_type">
-        <option selected>Choose...</option>
-        <option>External</option>
-        <option>Internal</option>
-      </select>
     </div>
     <div class="col-12">
       <label for="inputAddress" class="form-label">Address</label>
@@ -40,7 +32,7 @@
       <input type="text" class="form-control" id="inputPostcode" name="postcode">
     </div>
     <div class="col-12">
-      <a href="/business_entities">
+      <a href="/internal_entities">
         <div class="btn btn-outline-secondary">Cancel</div>
       </a>
       <button type="submit" class="btn btn-outline-success">Update</button>
